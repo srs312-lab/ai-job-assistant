@@ -2,11 +2,13 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 from utils import extract_keywords, match_keywords
-
+import streamlit as st
+from dotenv import load_dotenv
 load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-print("API KEY:", os.getenv("OPENAI_API_KEY"))
+from openai import OpenAI
+client = OpenAI(api_key=api_key)
 
 def main():
     print("🚀 AI Job Assistant Started")
