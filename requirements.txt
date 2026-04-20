@@ -1,7 +1,7 @@
 streamlit==1.33.0
 openai
 python-dotenv
-pdfplumber
+pypdf
 python-docx
 reportlab
 altair==5.3.0
