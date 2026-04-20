@@ -1,12 +1,12 @@
 import re
-import pdfplumber
+from pypdf import PdfReader
 from docx import Document
 
 def extract_text_from_pdf(file):
+    reader = PdfReader(file)
     text = ""
-    with pdfplumber.open(file) as pdf:
-        for page in pdf.pages:
-            text += page.extract_text() or ""
+    for page in reader.pages:
+        text += page.extract_text() or ""
     return text
 
 def extract_text_from_docx(file):
