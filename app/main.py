@@ -1,13 +1,20 @@
 import os
-from dotenv import load_dotenv
-from openai import OpenAI
-from utils import extract_keywords, match_keywords
 import streamlit as st
 from dotenv import load_dotenv
+from openai import OpenAI
+from utils_helper import extract_keywords, match_keywords
+
+# Load local env (for local dev)
 load_dotenv()
+
+# Get API key (local OR Streamlit Cloud)
 api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
 
-from openai import OpenAI
+# Safety check (VERY important)
+if not api_key:
+    raise ValueError("❌ OPENAI_API_KEY not found. Add it to .env or Streamlit secrets.")
+
+# Initialize client
 client = OpenAI(api_key=api_key)
 
 def main():

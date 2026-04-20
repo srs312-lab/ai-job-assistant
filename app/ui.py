@@ -1,6 +1,7 @@
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from io import BytesIO
+from main import generate_resume
 from app.utils_helper import (
     extract_text_from_pdf,
     extract_text_from_docx,
@@ -24,8 +25,6 @@ def create_pdf(text):
     buffer.seek(0)
     return buffer
 import streamlit as st
-from main import generate_resume
-from utils import extract_keywords, match_keywords, calculate_score
 
 st.set_page_config(page_title="AI Job Assistant", layout="wide")
 
