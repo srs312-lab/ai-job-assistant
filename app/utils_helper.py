@@ -40,3 +40,33 @@ def calculate_score(jd_keywords, matched):
 
     score = (len(matched) / len(jd_keywords)) * 100
     return round(score)
+
+def calculate_ats_score(jd_text, resume_text, matched_keywords):
+    jd_words = jd_text.split()
+    resume_words = resume_text.split()
+
+    # --- 1. Keyword Match (50%) ---
+    keyword_score = (len(matched_keywords) / len(set(jd_words))) if jd_words else 0
+    keyword_score *= 50
+
+    # --- 2. Section Coverage (20%) ---
+    sections = ["experience", "skills", "education", "projects"]
+    section_hits = sum(1 for sec in sections if sec in resume_text.lower())
+    section_score = (section_hits / len(sections)) * 20
+
+    # --- 3. Keyword Density (15%) ---
+    density = len(matched_keywords) / len(resume_words) if resume_words else 0
+    density_score = min(density * 100, 15)  # cap at 15
+
+    # --- 4. Length Quality (15%) ---
+    word_count = len(resume_words)
+    if 400 <= word_count <= 900:
+        length_score = 15
+    elif 250 <= word_count < 400 or 900 < word_count <= 1200:
+        length_score = 10
+    else:
+        length_score = 5
+
+    total_score = keyword_score + section_score + density_score + length_score
+
+    return round(total_score)
